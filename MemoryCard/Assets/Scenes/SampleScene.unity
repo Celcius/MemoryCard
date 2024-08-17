@@ -281,6 +281,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5406391171238036512, guid: bed7be51590ab7e4da252495e3bffd88, type: 3}
+      propertyPath: m_Constraint
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5406391171910779909, guid: bed7be51590ab7e4da252495e3bffd88, type: 3}
       propertyPath: m_Name
       value: Manager

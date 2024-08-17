@@ -4,5 +4,6 @@ using UnityEngine;
 
 public struct CardData
 {
+    public Sprite CardImage;
     public int CardID;
 }

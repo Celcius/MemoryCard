@@ -13,5 +13,18 @@ MonoBehaviour:
   m_Name: GameManager
   m_EditorClassIdentifier: 
   CardPairs: 5
-  Columns: 3
+  PossibleCards:
+  - {fileID: 21300000, guid: b73c7c0df53b38a4c8e707156a5c3cb2, type: 3}
+  - {fileID: 21300000, guid: ef2239076ebfb934799e15dd94f0bc4c, type: 3}
+  - {fileID: 21300000, guid: 997605aa810d50843b81ed7341a45558, type: 3}
+  - {fileID: 21300000, guid: b06473d612f10b1408d574888308915c, type: 3}
+  - {fileID: 21300000, guid: 1920c19e976d6f8409a90a1bf4846437, type: 3}
+  - {fileID: 21300000, guid: 8b43e1ff160121c49bb1cf8ad5004427, type: 3}
+  - {fileID: 21300000, guid: 3665e737200c20d4984be8776d2316da, type: 3}
+  - {fileID: 21300000, guid: 17469e665d04f4842874c90dd657dd9d, type: 3}
+  - {fileID: 21300000, guid: 30f67fad5fb18724980cb236e1dae2b0, type: 3}
+  - {fileID: 21300000, guid: 74d9c91c738828a42b640c71557a7e76, type: 3}
+  - {fileID: 21300000, guid: 6d5d272463a02e64f8d205300ece55c7, type: 3}
+  - {fileID: 21300000, guid: 1cf35b09b65cd71449a39f4cd8983e74, type: 3}
+  Rows: 5
   _cardPrefab: {fileID: 7168020257157631226, guid: 3466ab986306ad84b8c9c7733d8ca70d, type: 3}

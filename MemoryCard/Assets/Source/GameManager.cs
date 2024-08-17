@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Runtime.ExceptionServices;
 using System.Numerics;
+using Unity.VisualScripting;
 
 
 [CreateAssetMenu(fileName = "GameManager", menuName = "MemoryCard/GameManager")]
@@ -14,7 +15,11 @@ public class GameManager : ScriptableObject
 
     [SerializeField]
     private int CardPairs = 0;
-    private int SameElements = 2;
+
+    [SerializeField]
+    private Sprite[] PossibleCards;
+
+    public int SameElements = 2;
 
     [SerializeField]
     public int Rows = 5;
@@ -24,6 +29,12 @@ public class GameManager : ScriptableObject
     private Card _cardPrefab;
 
     List<Card> _cards = new List<Card>();
+
+    private RoundController _controller;
+    public RoundController GameController
+    {
+        get => _controller;
+    }
 
     private void OnEnable()
     {
@@ -50,12 +61,23 @@ public class GameManager : ScriptableObject
         _cards.Clear();
 
     }
-    public Card[] StartGame()
+    public Card[] StartGame(RoundController controller)
     {
+        _controller = controller;
+        UnityEngine.Random.InitState((int)System.DateTime.Now.Ticks * UnityEngine.Random.Range(1, 999));
         ClearCards();
+
+        // Choose Sets
+        List<Sprite> chosenCards = new List<Sprite>(PossibleCards);
+        chosenCards.Sort(RandomSort);
+        for(int i = chosenCards.Count-1; i >= CardPairs; i--)
+        {
+            chosenCards.RemoveAt(i);
+        }
+
         
-        List<int> symbolData = new List<int>();
-        for(int i = 0; i < CardPairs; i++)
+        // Init Cards
+        for(int i = 0; i < CardPairs && i < chosenCards.Count; i++)
         {
             for(int j = 0; j < SameElements; j++)
             {
@@ -63,38 +85,23 @@ public class GameManager : ScriptableObject
                 if(card != null)
                 {
                     _cards.Add(card);
-                    symbolData.Add(j);   
+                    card.Init(i, chosenCards[i]);
                 }
             }
         }
 
-        symbolData.Sort(RandomSort);
-    
-        for(int i = 0; i < symbolData.Count; i++)
-        {
-            _cards[i].Init(symbolData[i]);
-        }
+        _cards.Sort(RandomCardSort);
 
         return _cards.ToArray();
     }
 
-    private static int RandomSort(int x, int y)
+    private static int RandomSort(Sprite x, Sprite y)
     {
         return UnityEngine.Random.Range(-1,1);
     }
 
-    public void OnFlippedCard(Card card)
+    private static int RandomCardSort(Card x, Card y)
     {
-
-
-        //card.AnimateFailure();
-        /*if(Random.Range(0,5 % 2 == 0))
-        {
-            card.AnimateSuccess();
-        }
-        else
-        {
-            card.AnimateFailure();
-        }*/
+        return UnityEngine.Random.Range(-1,1);
     }
 }
