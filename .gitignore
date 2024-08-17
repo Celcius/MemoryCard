@@ -72,3 +72,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 MemoryCard/Library/
 MemoryCard/UserSettings/
+MemoryCard/Bin/Build/
+MemoryCard/Temp/
+MemoryCard/Bin/

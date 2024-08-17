@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9838519890fa89e49be2210e09ddff4a, type: 3}
   m_Name: GameManager
   m_EditorClassIdentifier: 
+  CardPairs: 5
+  Columns: 3
+  _cardPrefab: {fileID: 7168020257157631226, guid: 3466ab986306ad84b8c9c7733d8ca70d, type: 3}
