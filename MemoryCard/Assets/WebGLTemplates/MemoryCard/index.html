@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>{{{ PRODUCT_NAME }}}</title>
+  </head>
+  <body style="text-align: center">
+    <canvas id="unity-canvas" width={{{ WIDTH }}} height={{{ HEIGHT }}} style="width: {{{ WIDTH }}}px; height: {{{ HEIGHT }}}px; background: {{{ BACKGROUND_FILENAME ? 'url(\'Build/' + BACKGROUND_FILENAME.replace(/'/g, '%27') + '\') center / cover' : BACKGROUND_COLOR }}}"></canvas>
+    <script src="Build/{{{ LOADER_FILENAME }}}"></script>
+    <script>
+      var unityInstance;
+
+      function sendImageToUnity(imageUrl) {
+          fetch(imageUrl)
+              .then(response => response.blob())
+              .then(blob => {
+                  var reader = new FileReader();
+                  reader.onloadend = function () {
+                      var imageData = reader.result.split(',')[1]; // Get the base64 data
+                      unityInstance.SendMessage('JavaScriptHook', 'ApplyImage', imageData);
+                  }
+                  reader.readAsDataURL(blob);
+              });
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+          createUnityInstance(document.querySelector("#unityContainer"), {
+                dataUrl: "Build/{{{ DATA_FILENAME }}}",
+              frameworkUrl: "Build/{{{ FRAMEWORK_FILENAME }}}",
+      #if USE_WASM
+              codeUrl: "Build/{{{ CODE_FILENAME }}}",
+      #endif
+      #if MEMORY_FILENAME
+              memoryUrl: "Build/{{{ MEMORY_FILENAME }}}",
+      #endif
+      #if SYMBOLS_FILENAME
+              symbolsUrl: "Build/{{{ SYMBOLS_FILENAME }}}",
+      #endif
+              streamingAssetsUrl: "StreamingAssets",
+              companyName: {{{ JSON.stringify(COMPANY_NAME) }}},
+              productName: {{{ JSON.stringify(PRODUCT_NAME) }}},
+              productVersion: {{{ JSON.stringify(PRODUCT_VERSION) }}},  
+          }).then((instance) => {
+              unityInstance = instance;
+          });
+      });
+
+      // Example to load an image after the Unity instance is ready
+      window.UnityReady = function() {
+          sendImageToUnity('path/to/your/image.png');
+      }
+  </script>
+  </body>
+</html>
